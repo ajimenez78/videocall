@@ -1,5 +1,4 @@
-#
-# Copyright 2025 LiveKit
+# Copyright 2024 LiveKit, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include: package:lints/recommended.yaml
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+
+# https://pub.dev/packages/flutter_lints
+
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   errors:
@@ -21,7 +32,6 @@ analyzer:
     no_wildcard_variable_uses: ignore
     use_super_parameters: ignore
     avoid_print: ignore
-    deprecated_member_use_from_same_package: ignore
 
   # Exclude protobuf files
   exclude:
@@ -29,7 +39,6 @@ analyzer:
     - "**/*.pbenum.dart"
     - "**/*.pbjson.dart"
     - "**/*.pbserver.dart"
-    # - 'web/*.dart'
 
 linter:
   rules:
