@@ -108,7 +108,7 @@ class _ParticipantStatsWidgetState extends State<ParticipantStatsWidget> {
     }
   }
 
-  _onParticipantChanged() {
+  void _onParticipantChanged() {
     for (var element in listeners) {
       unawaited(element.dispose());
     }
