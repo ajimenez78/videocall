@@ -1,44 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:livekit_example/theme.dart';
-import 'package:logging/logging.dart';
-import 'package:intl/intl.dart';
-import 'pages/connect.dart';
+import 'package:videocall/widgets/videocall_widget.dart';
 
 void main() async {
-  final format = DateFormat('HH:mm:ss');
-  // configure logs for debugging
-  Logger.root.level = Level.FINEST;
-  Logger.root.onRecord.listen((record) {
-    print('${format.format(record.time)} [${record.level.name}]: ${record.message}');
-  });
-
-  WidgetsFlutterBinding.ensureInitialized();
-  /*if (lkPlatformIsDesktop()) {
-    await FlutterWindowClose.setWindowShouldCloseHandler(() async {
-      await onWindowShouldClose?.call();
-      return true;
-    });
-  }*/
-
-  /// for livestreaming app, you can initialize the bypassVoiceProcessing = true
-  /// here to get better audio quality
-  ///
-  /// await LiveKitClient.initialize(
-  ///  bypassVoiceProcessing: lkPlatformIsMobile(),
-  /// );
-  runApp(const LiveKitExampleApp());
+  runApp(VideocallApp());
 }
 
-class LiveKitExampleApp extends StatelessWidget {
-  //
-  const LiveKitExampleApp({
-    super.key,
-  });
+class VideocallApp extends StatelessWidget {
+  const VideocallApp({super.key});
 
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        title: 'LiveKit Flutter Example',
-        theme: LiveKitTheme().buildThemeData(context),
-        home: const ConnectPage(),
-      );
+   @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Videocall App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Welcome to Videocall App'),
+        ),
+        body: VideocallWidget(),
+      ),
+    );
+  }
 }
