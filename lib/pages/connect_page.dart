@@ -17,19 +17,27 @@ class ConnectPage extends StatefulWidget {
 
 class _ConnectPageState extends State<ConnectPage> {
   final _formKey = GlobalKey<FormState>();
-  final _roomNameController = TextEditingController();
   final _userNameController = TextEditingController();
+  String? _selectedRoom;
+
+  // List of available rooms
+  final List<String> _availableRooms = [
+    'Room 1',
+    'Room 2',
+    'Room 3',
+    'Meeting Room',
+    'Conference Hall',
+  ];
 
   @override
   void dispose() {
-    _roomNameController.dispose();
     _userNameController.dispose();
     super.dispose();
   }
 
   void _handleJoin() async {
     if (_formKey.currentState!.validate()) {
-      final roomName = _roomNameController.text;
+      final roomName = _selectedRoom;
       final userName = _userNameController.text;
 
       try {
@@ -42,6 +50,7 @@ class _ConnectPageState extends State<ConnectPage> {
         print('Received token: ${data['token']}');
 
         // Form is valid, proceed to PreJoinPage
+        if (!mounted) return;
         await Navigator.pushNamed(context, PreJoinPage.routeName,
           arguments: JoinArgs(
             url: Constants.SERVER_URL,
@@ -87,17 +96,28 @@ class _ConnectPageState extends State<ConnectPage> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 24),
-                    TextFormField(
-                      controller: _roomNameController,
+                    DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: 'Room Name',
-                        hintText: 'Enter room name',
+                        hintText: 'Select a room',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.meeting_room),
                       ),
+                      hint: Text('Select a room'),
+                      items: _availableRooms.map((String room) {
+                        return DropdownMenuItem<String>(
+                          value: room,
+                          child: Text(room),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedRoom = newValue;
+                        });
+                      },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter a room name';
+                          return 'Please select a room';
                         }
                         return null;
                       },

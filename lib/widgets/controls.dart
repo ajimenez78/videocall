@@ -69,11 +69,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     setState(() {});
   }
 
-  void _unpublishAll() async {
-    final result = await context.showUnPublishDialog();
-    if (result == true) await participant.unpublishAllTracks();
-  }
-
   bool get isMuted => participant.isMuted;
 
   void _disableAudio() async {
@@ -92,11 +87,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     await participant.setCameraEnabled(true);
   }
 
-  void _selectAudioOutput(MediaDevice device) async {
-    await widget.room.setAudioOutputDevice(device);
-    setState(() {});
-  }
-
   void _selectAudioInput(MediaDevice device) async {
     await widget.room.setAudioInputDevice(device);
     setState(() {});
@@ -111,22 +101,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     _speakerphoneOn = !_speakerphoneOn;
     await widget.room.setSpeakerOn(_speakerphoneOn, forceSpeakerOutput: false);
     setState(() {});
-  }
-
-  void _toggleCamera() async {
-    final track = participant.videoTrackPublications.firstOrNull?.track;
-    if (track == null) return;
-
-    try {
-      final newPosition = position.switched();
-      await track.setCameraPosition(newPosition);
-      setState(() {
-        position = newPosition;
-      });
-    } catch (error) {
-      print('could not restart track: $error');
-      return;
-    }
   }
 
   void _enableScreenShare() async {
@@ -212,49 +186,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     if (result == true) await widget.room.disconnect();
   }
 
-  void _onTapUpdateSubscribePermission() async {
-    final result = await context.showSubscribePermissionDialog();
-    if (result != null) {
-      try {
-        widget.room.localParticipant?.setTrackSubscriptionPermissions(
-          allParticipantsAllowed: result,
-        );
-      } catch (error) {
-        if (!mounted) return;
-        await context.showErrorDialog(error);
-      }
-    }
-  }
-
-  void _onTapSimulateScenario() async {
-    final result = await context.showSimulateScenarioDialog();
-    if (result != null) {
-      print('${result}');
-
-      if (SimulateScenarioResult.e2eeKeyRatchet == result) {
-        await widget.room.e2eeManager?.ratchetKey();
-      }
-
-      if (SimulateScenarioResult.participantMetadata == result) {
-        widget.room.localParticipant?.setMetadata('new metadata ${widget.room.localParticipant?.identity}');
-      }
-
-      if (SimulateScenarioResult.participantName == result) {
-        widget.room.localParticipant?.setName('new name for ${widget.room.localParticipant?.identity}');
-      }
-
-      await widget.room.sendSimulateScenario(
-        speakerUpdate: result == SimulateScenarioResult.speakerUpdate ? 3 : null,
-        signalReconnect: result == SimulateScenarioResult.signalReconnect ? true : null,
-        fullReconnect: result == SimulateScenarioResult.fullReconnect ? true : null,
-        nodeFailure: result == SimulateScenarioResult.nodeFailure ? true : null,
-        migration: result == SimulateScenarioResult.migration ? true : null,
-        serverLeave: result == SimulateScenarioResult.serverLeave ? true : null,
-        switchCandidate: result == SimulateScenarioResult.switchCandidate ? true : null,
-      );
-    }
-  }
-
   void _onTapSendData() async {
     final result = await context.showSendDataDialog();
     if (result == true) {
@@ -277,11 +208,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
         spacing: 5,
         runSpacing: 5,
         children: [
-          IconButton(
-            onPressed: _unpublishAll,
-            icon: const Icon(Icons.cancel),
-            tooltip: 'Unpublish all',
-          ),
           if (participant.isMicrophoneEnabled())
             if (lkPlatformIs(PlatformType.android))
               IconButton(
@@ -334,43 +260,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
               icon: const Icon(Icons.mic_off),
               tooltip: 'un-mute audio',
             ),
-          if (!lkPlatformIsMobile())
-            PopupMenuButton<MediaDevice>(
-              icon: const Icon(Icons.volume_up),
-              itemBuilder: (BuildContext context) {
-                return [
-                  const PopupMenuItem<MediaDevice>(
-                    value: null,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.speaker,
-                        color: Colors.white,
-                      ),
-                      title: Text('Select Audio Output'),
-                    ),
-                  ),
-                  if (_audioOutputs != null)
-                    ..._audioOutputs!.map((device) {
-                      return PopupMenuItem<MediaDevice>(
-                        value: device,
-                        child: ListTile(
-                          leading: (device.deviceId == widget.room.selectedAudioOutputDeviceId)
-                              ? const Icon(
-                                  Icons.check_box_outlined,
-                                  color: Colors.white,
-                                )
-                              : const Icon(
-                                  Icons.check_box_outline_blank,
-                                  color: Colors.white,
-                                ),
-                          title: Text(device.label),
-                        ),
-                        onTap: () => _selectAudioOutput(device),
-                      );
-                    })
-                ];
-              },
-            ),
           if (!kIsWeb && lkPlatformIsMobile())
             IconButton(
               disabledColor: Colors.grey,
@@ -422,11 +311,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
               icon: const Icon(Icons.videocam_off),
               tooltip: 'un-mute video',
             ),
-          IconButton(
-            icon: Icon(position == CameraPosition.back ? Icons.video_camera_back : Icons.video_camera_front),
-            onPressed: () => _toggleCamera(),
-            tooltip: 'toggle camera',
-          ),
           if (participant.isScreenShareEnabled())
             IconButton(
               icon: const Icon(Icons.monitor_outlined),
@@ -440,24 +324,14 @@ class _ControlsWidgetState extends State<ControlsWidget> {
               tooltip: 'share screen (experimental)',
             ),
           IconButton(
-            onPressed: _onTapDisconnect,
-            icon: const Icon(Icons.close_sharp),
-            tooltip: 'disconnect',
-          ),
-          IconButton(
             onPressed: _onTapSendData,
             icon: const Icon(Icons.message),
             tooltip: 'send demo data',
           ),
           IconButton(
-            onPressed: _onTapUpdateSubscribePermission,
-            icon: const Icon(Icons.settings),
-            tooltip: 'Subscribe permission',
-          ),
-          IconButton(
-            onPressed: _onTapSimulateScenario,
-            icon: const Icon(Icons.bug_report),
-            tooltip: 'Simulate scenario',
+            onPressed: _onTapDisconnect,
+            icon: const Icon(Icons.close_sharp),
+            tooltip: 'disconnect',
           ),
         ],
       ),
