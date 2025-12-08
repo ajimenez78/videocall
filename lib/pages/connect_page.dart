@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:videocall/configuration/constants.dart';
 import 'package:videocall/widgets/videocall_widget.dart';
 import 'package:videocall/pages/prejoin_page.dart';
+import 'package:http/http.dart' as http;
 
 class ConnectPage extends StatefulWidget {
   const ConnectPage({Key? key}) : super(key: key);
@@ -23,10 +27,25 @@ class _ConnectPageState extends State<ConnectPage> {
     super.dispose();
   }
 
-  void _handleJoin() async {
+  void _handleConnect() async {
     if (_formKey.currentState!.validate()) {
-      // Form is valid, proceed to PreJoinPage
-      await Navigator.pushNamed(context, PreJoinPage.routeName);
+      final roomName = _roomNameController.text;
+      final userName = _userNameController.text;
+
+      try {
+        final resp = await http.get(Uri.parse('${Constants.TOKEN_ENDPOINT}?room=$roomName&username=$userName'));
+        if (resp.statusCode != 200) {
+          throw Exception('Failed to fetch token: ${resp.statusCode} ${resp.reasonPhrase}');
+        }
+        final data = jsonDecode(resp.body);
+        print('Server response: $data');
+        print('Received token: ${data['token']}');
+
+        // Form is valid, proceed to PreJoinPage
+        await Navigator.pushNamed(context, PreJoinPage.routeName);
+      } catch (e) {
+        print('Failed to fetch token. See console for more details. $e');
+      }
     }
   }
 
@@ -89,7 +108,7 @@ class _ConnectPageState extends State<ConnectPage> {
                     ),
                     SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: _handleJoin,
+                      onPressed: _handleConnect,
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
