@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:videocall/widgets/videocall_widget.dart';
+import 'package:videocall/pages/home_page.dart';
+import 'package:videocall/pages/prejoin_page.dart';
 
 void main() async {
   runApp(VideocallApp());
@@ -12,12 +13,11 @@ class VideocallApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Videocall App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Videocall App'),
-        ),
-        body: VideocallWidget(),
-      ),
+      initialRoute: HomePage.routeName,
+      routes: {
+        HomePage.routeName: (context) => HomePage(),
+        PreJoinPage.routeName: (context) => PreJoinPage(),
+      },
     );
   }
 }
