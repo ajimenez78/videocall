@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:videocall/pages/home_page.dart';
 import 'package:videocall/pages/connect_page.dart';
 import 'package:videocall/pages/prejoin_page.dart';
 
@@ -13,8 +14,9 @@ class VideocallApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Videocall App',
-      initialRoute: ConnectPage.routeName,
+      initialRoute: HomePage.routeName,
       routes: {
+        HomePage.routeName: (context) => HomePage(),
         ConnectPage.routeName: (context) => ConnectPage(),
         PreJoinPage.routeName: (context) => PreJoinPage(),
       },

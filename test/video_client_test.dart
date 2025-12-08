@@ -21,14 +21,17 @@ void main() {
     // Build the VideocallApp widget
     await tester.pumpWidget(VideocallApp());
 
-    // Verify that the app title appears
-    expect(find.text('Welcome to Videocall App'), findsOneWidget);
+    // Verify that the HomePage title appears
+    expect(find.text('Videocall Home'), findsOneWidget);
 
-    // Verify that the VideocallWidget text appears
-    expect(find.text('Videocall Widget'), findsOneWidget);
-    expect(find.text('Ready to start your video call'), findsOneWidget);
+    // Verify that the welcome message appears
+    expect(find.text('Welcome to Videocall App'), findsOneWidget);
+    expect(find.text('Connect with others through high-quality video calls'), findsOneWidget);
 
     // Verify that the video call icon appears
     expect(find.byIcon(Icons.video_call), findsOneWidget);
+
+    // Verify that the "Join a Call" button appears
+    expect(find.text('Join a Call'), findsOneWidget);
   });
 }

@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class ConnectPage extends StatefulWidget {
   const ConnectPage({Key? key}) : super(key: key);
 
-  static const routeName = '/';
+  static const routeName = '/connect';
 
   @override
   State<ConnectPage> createState() => _ConnectPageState();
