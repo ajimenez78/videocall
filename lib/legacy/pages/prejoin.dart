@@ -182,7 +182,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
       }
 
       final room = Room(
-        roomOptions: Options(
+        roomOptions: RoomOptions(
           adaptiveStream: args.adaptiveStream,
           dynacast: args.dynacast,
           defaultAudioPublishOptions: const AudioPublishOptions(

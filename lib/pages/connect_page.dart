@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+import 'package:videocall/widgets/videocall_widget.dart';
+import 'package:videocall/pages/prejoin_page.dart';
+
+class ConnectPage extends StatefulWidget {
+  const ConnectPage({Key? key}) : super(key: key);
+
+  static const routeName = '/';
+
+  @override
+  State<ConnectPage> createState() => _ConnectPageState();
+}
+
+class _ConnectPageState extends State<ConnectPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _roomNameController = TextEditingController();
+  final _userNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _roomNameController.dispose();
+    _userNameController.dispose();
+    super.dispose();
+  }
+
+  void _handleJoin() async {
+    if (_formKey.currentState!.validate()) {
+      // Form is valid, proceed to PreJoinPage
+      await Navigator.pushNamed(context, PreJoinPage.routeName);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Welcome to Videocall App'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+              child: VideocallWidget(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Join a Room',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 24),
+                    TextFormField(
+                      controller: _roomNameController,
+                      decoration: InputDecoration(
+                        labelText: 'Room Name',
+                        hintText: 'Enter room name',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.meeting_room),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a room name';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                        labelText: 'User Name',
+                        hintText: 'Enter your name',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: _handleJoin,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: Text(
+                        'Join Room',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
