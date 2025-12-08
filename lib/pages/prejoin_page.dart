@@ -34,13 +34,10 @@ class JoinArgs {
 
 class PreJoinPage extends StatefulWidget {
   const PreJoinPage({
-    required this.args,
     super.key,
   });
 
   static const routeName = '/prejoin';
-
-  final JoinArgs args;
   @override
   State<StatefulWidget> createState() => _PreJoinPageState();
 }
@@ -163,7 +160,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
 
     setState(() {});
 
-    final args = widget.args;
+    final args = ModalRoute.of(context)!.settings.arguments as JoinArgs;
 
     try {
       //create new room

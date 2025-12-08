@@ -27,7 +27,7 @@ class _ConnectPageState extends State<ConnectPage> {
     super.dispose();
   }
 
-  void _handleConnect() async {
+  void _handleJoin() async {
     if (_formKey.currentState!.validate()) {
       final roomName = _roomNameController.text;
       final userName = _userNameController.text;
@@ -42,7 +42,19 @@ class _ConnectPageState extends State<ConnectPage> {
         print('Received token: ${data['token']}');
 
         // Form is valid, proceed to PreJoinPage
-        await Navigator.pushNamed(context, PreJoinPage.routeName);
+        await Navigator.pushNamed(context, PreJoinPage.routeName,
+          arguments: JoinArgs(
+            url: Constants.SERVER_URL,
+            token: data['token'],
+            e2ee: Constants.E2EE,
+            e2eeKey: Constants.E2EEKEY,
+            simulcast: Constants.SIMULCAST,
+            adaptiveStream: Constants.ADAPTATIVE_STREAM,
+            dynacast: Constants.DYNACAST,
+            preferredCodec: Constants.PREFERRED_CODEC,
+            enableBackupVideoCodec: ['VP9', 'AV1'].contains(Constants.PREFERRED_CODEC),
+          )
+        );
       } catch (e) {
         print('Failed to fetch token. See console for more details. $e');
       }
@@ -108,7 +120,7 @@ class _ConnectPageState extends State<ConnectPage> {
                     ),
                     SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: _handleConnect,
+                      onPressed: _handleJoin,
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
