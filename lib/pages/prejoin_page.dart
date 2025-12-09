@@ -50,6 +50,11 @@ class _PreJoinPageState extends State<PreJoinPage> {
     super.deactivate();
   }
 
+
+  bool _isFrontCamera(MediaDevice camera) {
+    return camera.label.toLowerCase().contains('front');
+  }
+
   void _loadDevices(List<MediaDevice> devices) async {
     _audioInputs = devices.where((d) => d.kind == 'audioinput').toList();
     _videoInputs = devices.where((d) => d.kind == 'videoinput').toList();
@@ -66,7 +71,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
 
     if (_videoInputs.isNotEmpty) {
       if (_selectedVideoDevice == null) {
-        _selectedVideoDevice = _videoInputs.first;
+        _selectedVideoDevice = _videoInputs.firstWhere(_isFrontCamera, orElse: () => _videoInputs.first);
         Future.delayed(const Duration(milliseconds: 100), () async {
           await _changeLocalVideoTrack();
           setState(() {});
