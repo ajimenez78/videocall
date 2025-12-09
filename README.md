@@ -1,6 +1,8 @@
 # Aplicación de Videollamadas - LiveKit Flutter
 
-Esta aplicación implementa la demostración de una sala de video utilizando el SDK de Flutter de LiveKit. Está orientada a plataformas móviles y presenta una interfaz simplificada con respecto a los ejemplos que ofrece Livekit en su documentación
+Esta aplicación implementa la demostración de una sala de video utilizando el [SDK de Flutter de LiveKit](https://github.com/livekit/client-sdk-flutter). Está orientada a plataformas móviles y presenta una interfaz simplificada con respecto a los ejemplos que ofrece Livekit en su documentación.
+
+Incluye además la automatización de la obtención del token de acceso a través de un servicio externo y la internacionalización de los textos.
 
 ## Inicio Rápido
 

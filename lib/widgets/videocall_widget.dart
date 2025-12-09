@@ -4,9 +4,6 @@ import 'package:videocall/l10n/app_localizations.dart';
 class VideocallWidget extends StatelessWidget {
   const VideocallWidget({Key? key}) : super(key: key);
 
-  static const serverUrl = 'wss://meet.movilok.net'; // Replace with your LiveKit server URL
-  static const tokenEndpoint = 'http://localhost:3000/getToken'; // Replace with your token server URL
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);

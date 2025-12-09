@@ -31,12 +31,10 @@ class _ControlsWidgetState extends State<ControlsWidget> {
   CameraPosition position = CameraPosition.front;
 
   List<MediaDevice>? _audioInputs;
-  List<MediaDevice>? _audioOutputs;
   List<MediaDevice>? _videoInputs;
 
   StreamSubscription? _subscription;
 
-  bool _speakerphoneOn = Hardware.instance.speakerOn ?? false;
 
   @override
   void initState() {
@@ -59,7 +57,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
 
   void _loadDevices(List<MediaDevice> devices) async {
     _audioInputs = devices.where((d) => d.kind == 'audioinput').toList();
-    _audioOutputs = devices.where((d) => d.kind == 'audiooutput').toList();
     _videoInputs = devices.where((d) => d.kind == 'videoinput').toList();
     setState(() {});
   }
@@ -94,12 +91,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
 
   void _selectVideoInput(MediaDevice device) async {
     await widget.room.setVideoInputDevice(device);
-    setState(() {});
-  }
-
-  void _setSpeakerphoneOn() async {
-    _speakerphoneOn = !_speakerphoneOn;
-    await widget.room.setSpeakerOn(_speakerphoneOn, forceSpeakerOutput: false);
     setState(() {});
   }
 
@@ -261,13 +252,6 @@ class _ControlsWidgetState extends State<ControlsWidget> {
               onPressed: _enableAudio,
               icon: const Icon(Icons.mic_off),
               tooltip: l10n.controlsUnmuteAudio,
-            ),
-          if (!kIsWeb && lkPlatformIsMobile())
-            IconButton(
-              disabledColor: Colors.grey,
-              onPressed: _setSpeakerphoneOn,
-              icon: Icon(_speakerphoneOn ? Icons.speaker_phone : Icons.phone_android),
-              tooltip: l10n.controlsSwitchSpeakerphone,
             ),
           if (participant.isCameraEnabled())
             PopupMenuButton<MediaDevice>(

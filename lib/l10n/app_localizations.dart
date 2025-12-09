@@ -118,9 +118,6 @@ class AppLocalizations {
   String get controlsMuteMicrophone =>
       locale.languageCode == 'en' ? 'Mute Microphone' : 'Silenciar Micrófono';
 
-  String get controlsSwitchSpeakerphone =>
-      locale.languageCode == 'en' ? 'Switch SpeakerPhone' : 'Cambiar Altavoz';
-
   String get controlsDisableCamera =>
       locale.languageCode == 'en' ? 'Disable Camera' : 'Desactivar Cámara';
 
