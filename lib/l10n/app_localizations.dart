@@ -68,6 +68,76 @@ class AppLocalizations {
       locale.languageCode == 'en'
       ? 'Ready to start your video call'
       : 'Listo para iniciar su videollamada';
+
+  // Error messages
+  String get errorFetchToken =>
+      locale.languageCode == 'en'
+      ? 'Failed to fetch token'
+      : 'Error al obtener el token';
+
+  String get errorSeeConsole =>
+      locale.languageCode == 'en'
+      ? 'See console for more details'
+      : 'Ver consola para más detalles';
+
+  // PreJoin Page strings
+  String get prejoinTitle =>
+      locale.languageCode == 'en' ? 'Select Devices' : 'Seleccionar Dispositivos';
+
+  String get prejoinCamera =>
+      locale.languageCode == 'en' ? 'Camera:' : 'Cámara:';
+
+  String get prejoinMicrophone =>
+      locale.languageCode == 'en' ? 'Microphone:' : 'Micrófono:';
+
+  String get prejoinDisableCamera =>
+      locale.languageCode == 'en' ? 'Disable Camera' : 'Desactivar Cámara';
+
+  String get prejoinDisableMicrophone =>
+      locale.languageCode == 'en' ? 'Disable Microphone' : 'Desactivar Micrófono';
+
+  String get prejoinSelectCamera =>
+      locale.languageCode == 'en' ? 'Select Camera' : 'Seleccionar Cámara';
+
+  String get prejoinSelectMicrophone =>
+      locale.languageCode == 'en' ? 'Select Microphone' : 'Seleccionar Micrófono';
+
+  String get prejoinSelectVideoDimensions =>
+      locale.languageCode == 'en' ? 'Select Video Dimensions' : 'Seleccionar Dimensiones de Video';
+
+  String get prejoinJoinButton =>
+      locale.languageCode == 'en' ? 'JOIN' : 'UNIRSE';
+
+  // Controls Widget strings
+  String get controlsMuteAudio =>
+      locale.languageCode == 'en' ? 'mute audio' : 'silenciar audio';
+
+  String get controlsUnmuteAudio =>
+      locale.languageCode == 'en' ? 'un-mute audio' : 'activar audio';
+
+  String get controlsMuteMicrophone =>
+      locale.languageCode == 'en' ? 'Mute Microphone' : 'Silenciar Micrófono';
+
+  String get controlsSwitchSpeakerphone =>
+      locale.languageCode == 'en' ? 'Switch SpeakerPhone' : 'Cambiar Altavoz';
+
+  String get controlsDisableCamera =>
+      locale.languageCode == 'en' ? 'Disable Camera' : 'Desactivar Cámara';
+
+  String get controlsUnmuteVideo =>
+      locale.languageCode == 'en' ? 'un-mute video' : 'activar video';
+
+  String get controlsUnshareScreen =>
+      locale.languageCode == 'en' ? 'unshare screen (experimental)' : 'dejar de compartir pantalla (experimental)';
+
+  String get controlsShareScreen =>
+      locale.languageCode == 'en' ? 'share screen (experimental)' : 'compartir pantalla (experimental)';
+
+  String get controlsSendDemoData =>
+      locale.languageCode == 'en' ? 'send demo data' : 'enviar datos de prueba';
+
+  String get controlsDisconnect =>
+      locale.languageCode == 'en' ? 'disconnect' : 'desconectar';
 }
 
 class _AppLocalizationsDelegate

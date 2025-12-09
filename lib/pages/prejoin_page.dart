@@ -5,6 +5,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:videocall/exts.dart';
+import 'package:videocall/l10n/app_localizations.dart';
 
 import '../theme.dart';
 import 'room_page.dart';
@@ -251,10 +252,12 @@ class _PreJoinPageState extends State<PreJoinPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Select Devices',
+          title: Text(
+            l10n.prejoinTitle,
             style: TextStyle(
               color: Colors.white,
             ),
@@ -303,7 +306,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Camera:'),
+                      Text(l10n.prejoinCamera),
                       Switch(
                         value: _enableVideo,
                         onChanged: (value) => _setEnableVideo(value),
@@ -316,9 +319,9 @@ class _PreJoinPageState extends State<PreJoinPage> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2<MediaDevice>(
                       isExpanded: true,
-                      disabledHint: const Text('Disable Camera'),
-                      hint: const Text(
-                        'Select Camera',
+                      disabledHint: Text(l10n.prejoinDisableCamera),
+                      hint: Text(
+                        l10n.prejoinSelectCamera,
                       ),
                       items: _enableVideo
                           ? _videoInputs
@@ -358,8 +361,8 @@ class _PreJoinPageState extends State<PreJoinPage> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2<VideoParameters>(
                         isExpanded: true,
-                        hint: const Text(
-                          'Select Video Dimensions',
+                        hint: Text(
+                          l10n.prejoinSelectVideoDimensions,
                         ),
                         items: [
                           VideoParametersPresets.h480_43,
@@ -401,7 +404,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Microphone:'),
+                      Text(l10n.prejoinMicrophone),
                       Switch(
                         value: _enableAudio,
                         onChanged: (value) => _setEnableAudio(value),
@@ -414,9 +417,9 @@ class _PreJoinPageState extends State<PreJoinPage> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2<MediaDevice>(
                       isExpanded: true,
-                      disabledHint: const Text('Disable Microphone'),
-                      hint: const Text(
-                        'Select Microphone',
+                      disabledHint: Text(l10n.prejoinDisableMicrophone),
+                      hint: Text(
+                        l10n.prejoinSelectMicrophone,
                       ),
                       items: _enableAudio
                           ? _audioInputs
@@ -467,7 +470,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
                             ),
                           ),
                         ),
-                      const Text('JOIN'),
+                      Text(l10n.prejoinJoinButton),
                     ],
                   ),
                 ),

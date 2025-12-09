@@ -38,13 +38,14 @@ class _ConnectPageState extends State<ConnectPage> {
 
   void _handleJoin() async {
     if (_formKey.currentState!.validate()) {
+      final l10n = AppLocalizations.of(context);
       final roomName = _selectedRoom;
       final userName = _userNameController.text;
 
       try {
         final resp = await http.get(Uri.parse('${Constants.TOKEN_ENDPOINT}?room=$roomName&username=$userName'));
         if (resp.statusCode != 200) {
-          throw Exception('Failed to fetch token: ${resp.statusCode} ${resp.reasonPhrase}');
+          throw Exception('${l10n.errorFetchToken}: ${resp.statusCode} ${resp.reasonPhrase}');
         }
         final data = jsonDecode(resp.body);
         print('Server response: $data');
@@ -66,7 +67,7 @@ class _ConnectPageState extends State<ConnectPage> {
           )
         );
       } catch (e) {
-        print('Failed to fetch token. See console for more details. $e');
+        print('${l10n.errorFetchToken}. ${l10n.errorSeeConsole}. $e');
       }
     }
   }

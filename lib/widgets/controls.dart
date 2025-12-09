@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background/flutter_background.dart';
@@ -10,6 +9,7 @@ import 'package:livekit_client/livekit_client.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 import '../exts.dart';
+import '../l10n/app_localizations.dart';
 
 class ControlsWidget extends StatefulWidget {
   //
@@ -198,6 +198,8 @@ class _ControlsWidgetState extends State<ControlsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 15,
@@ -213,7 +215,7 @@ class _ControlsWidgetState extends State<ControlsWidget> {
               IconButton(
                 onPressed: _disableAudio,
                 icon: const Icon(Icons.mic),
-                tooltip: 'mute audio',
+                tooltip: l10n.controlsMuteAudio,
               )
             else
               PopupMenuButton<MediaDevice>(
@@ -224,12 +226,12 @@ class _ControlsWidgetState extends State<ControlsWidget> {
                     PopupMenuItem<MediaDevice>(
                       value: null,
                       onTap: isMuted ? _enableAudio : _disableAudio,
-                      child: const ListTile(
+                      child: ListTile(
                         leading: Icon(
                           Icons.mic_off,
                           color: Colors.white,
                         ),
-                        title: Text('Mute Microphone'),
+                        title: Text(l10n.controlsMuteMicrophone),
                       ),
                     ),
                     if (_audioInputs != null)
@@ -258,14 +260,14 @@ class _ControlsWidgetState extends State<ControlsWidget> {
             IconButton(
               onPressed: _enableAudio,
               icon: const Icon(Icons.mic_off),
-              tooltip: 'un-mute audio',
+              tooltip: l10n.controlsUnmuteAudio,
             ),
           if (!kIsWeb && lkPlatformIsMobile())
             IconButton(
               disabledColor: Colors.grey,
               onPressed: _setSpeakerphoneOn,
               icon: Icon(_speakerphoneOn ? Icons.speaker_phone : Icons.phone_android),
-              tooltip: 'Switch SpeakerPhone',
+              tooltip: l10n.controlsSwitchSpeakerphone,
             ),
           if (participant.isCameraEnabled())
             PopupMenuButton<MediaDevice>(
@@ -275,12 +277,12 @@ class _ControlsWidgetState extends State<ControlsWidget> {
                   PopupMenuItem<MediaDevice>(
                     value: null,
                     onTap: _disableVideo,
-                    child: const ListTile(
+                    child: ListTile(
                       leading: Icon(
                         Icons.videocam_off,
                         color: Colors.white,
                       ),
-                      title: Text('Disable Camera'),
+                      title: Text(l10n.controlsDisableCamera),
                     ),
                   ),
                   if (_videoInputs != null)
@@ -309,29 +311,29 @@ class _ControlsWidgetState extends State<ControlsWidget> {
             IconButton(
               onPressed: _enableVideo,
               icon: const Icon(Icons.videocam_off),
-              tooltip: 'un-mute video',
+              tooltip: l10n.controlsUnmuteVideo,
             ),
           if (participant.isScreenShareEnabled())
             IconButton(
               icon: const Icon(Icons.monitor_outlined),
               onPressed: () => _disableScreenShare(),
-              tooltip: 'unshare screen (experimental)',
+              tooltip: l10n.controlsUnshareScreen,
             )
           else
             IconButton(
               icon: const Icon(Icons.monitor),
               onPressed: () => _enableScreenShare(),
-              tooltip: 'share screen (experimental)',
+              tooltip: l10n.controlsShareScreen,
             ),
           IconButton(
             onPressed: _onTapSendData,
             icon: const Icon(Icons.message),
-            tooltip: 'send demo data',
+            tooltip: l10n.controlsSendDemoData,
           ),
           IconButton(
             onPressed: _onTapDisconnect,
             icon: const Icon(Icons.close_sharp),
-            tooltip: 'disconnect',
+            tooltip: l10n.controlsDisconnect,
           ),
         ],
       ),
