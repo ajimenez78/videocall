@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:videocall/pages/connect_page.dart';
+import 'package:videocall/l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,9 +9,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medical Teleconsultation'),
+        title: Text(l10n.homeTitle),
         backgroundColor: Colors.teal[700],
         foregroundColor: Colors.white,
       ),
@@ -34,7 +37,7 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: 32),
               Text(
-                'Telemedicine Portal',
+                l10n.homeHeading,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: Colors.teal[800],
                   fontWeight: FontWeight.bold,
@@ -43,7 +46,7 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
-                'Connect with healthcare professionals through secure video consultations',
+                l10n.homeSubtitle,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: Colors.grey[700],
                 ),
@@ -55,7 +58,7 @@ class HomePage extends StatelessWidget {
                   await Navigator.pushNamed(context, ConnectPage.routeName);
                 },
                 icon: Icon(Icons.video_call),
-                label: Text('Start Consultation'),
+                label: Text(l10n.homeButton),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal[700],
                   foregroundColor: Colors.white,

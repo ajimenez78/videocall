@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:videocall/l10n/app_localizations.dart';
 
 class VideocallWidget extends StatelessWidget {
   const VideocallWidget({Key? key}) : super(key: key);
@@ -8,6 +9,8 @@ class VideocallWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -19,12 +22,12 @@ class VideocallWidget extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Text(
-            'Videocall Widget',
+            l10n.videocallWidgetTitle,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           SizedBox(height: 8),
           Text(
-            'Ready to start your video call',
+            l10n.videocallWidgetSubtitle,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

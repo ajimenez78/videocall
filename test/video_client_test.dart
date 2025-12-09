@@ -20,13 +20,14 @@ void main() {
   testWidgets('VideocallApp renders correctly', (tester) async {
     // Build the VideocallApp widget
     await tester.pumpWidget(VideocallApp());
+    await tester.pumpAndSettle();
 
-    // Verify that the HomePage title appears
-    expect(find.text('Medical Teleconsultation'), findsOneWidget);
+    // Verify that the HomePage title appears (in Spanish)
+    expect(find.text('Teleconsulta Médica'), findsOneWidget);
 
-    // Verify that the welcome message appears
-    expect(find.text('Telemedicine Portal'), findsOneWidget);
-    expect(find.text('Connect with healthcare professionals through secure video consultations'), findsOneWidget);
+    // Verify that the welcome message appears (in Spanish)
+    expect(find.text('Portal de Telemedicina'), findsOneWidget);
+    expect(find.text('Conéctese con profesionales de la salud a través de videoconsultas seguras'), findsOneWidget);
 
     // Verify that the medical services icon appears
     expect(find.byIcon(Icons.medical_services), findsOneWidget);
@@ -34,7 +35,7 @@ void main() {
     // Verify that the video call icon appears in the button
     expect(find.byIcon(Icons.video_call), findsOneWidget);
 
-    // Verify that the "Start Consultation" button appears
-    expect(find.text('Start Consultation'), findsOneWidget);
+    // Verify that the "Start Consultation" button appears (in Spanish)
+    expect(find.text('Iniciar Consulta'), findsOneWidget);
   });
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:videocall/configuration/constants.dart';
 import 'package:videocall/widgets/videocall_widget.dart';
 import 'package:videocall/pages/prejoin_page.dart';
+import 'package:videocall/l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 
 class ConnectPage extends StatefulWidget {
@@ -72,9 +73,11 @@ class _ConnectPageState extends State<ConnectPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome to Videocall App'),
+        title: Text(l10n.connectTitle),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -91,19 +94,19 @@ class _ConnectPageState extends State<ConnectPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Join a Room',
+                      l10n.connectHeading,
                       style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 24),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        labelText: 'Room Name',
-                        hintText: 'Select a room',
+                        labelText: l10n.connectRoomLabel,
+                        hintText: l10n.connectRoomHint,
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.meeting_room),
                       ),
-                      hint: Text('Select a room'),
+                      hint: Text(l10n.connectRoomHint),
                       items: _availableRooms.map((String room) {
                         return DropdownMenuItem<String>(
                           value: room,
@@ -117,7 +120,7 @@ class _ConnectPageState extends State<ConnectPage> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please select a room';
+                          return l10n.connectRoomError;
                         }
                         return null;
                       },
@@ -126,14 +129,14 @@ class _ConnectPageState extends State<ConnectPage> {
                     TextFormField(
                       controller: _userNameController,
                       decoration: InputDecoration(
-                        labelText: 'User Name',
-                        hintText: 'Enter your name',
+                        labelText: l10n.connectUserLabel,
+                        hintText: l10n.connectUserHint,
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.person),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
+                          return l10n.connectUserError;
                         }
                         return null;
                       },
@@ -145,7 +148,7 @@ class _ConnectPageState extends State<ConnectPage> {
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
                       child: Text(
-                        'Join Room',
+                        l10n.connectButton,
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
