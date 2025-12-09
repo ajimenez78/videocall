@@ -18,7 +18,7 @@
   <uses-permission android:name="android.permission.INTERNET" />
   <application
       android:label="Videocall demo"
-      android:icon="@mipmap/livekit_ic_launcher">
+      android:icon="@mipmap/launcher_icon">
     <activity
         android:exported="true"
         android:name=".MainActivity"
