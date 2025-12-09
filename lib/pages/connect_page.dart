@@ -23,11 +23,9 @@ class _ConnectPageState extends State<ConnectPage> {
 
   // List of available rooms
   final List<String> _availableRooms = [
-    'Room 1',
-    'Room 2',
-    'Room 3',
-    'Meeting Room',
-    'Conference Hall',
+    'Enfermería',
+    'Consulta endocrinología',
+    'Medicina General',
   ];
 
   @override
