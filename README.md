@@ -1,30 +1,39 @@
-# LiveKit Flutter Example
+# Aplicación de Videollamadas - LiveKit Flutter
 
-This app implements a video room using LiveKit's Flutter SDK. Designed to run for iOS, Android, Web, Mac, and Windows.
+Esta aplicación implementa la demostración de una sala de video utilizando el SDK de Flutter de LiveKit. Está orientada a plataformas móviles y presenta una interfaz simplificada con respecto a los ejemplos que ofrece Livekit en su documentación
 
-## Quickstart
+## Inicio Rápido
 
-Run example:
+Ejecutar la aplicación:
 
 ```bash
 flutter pub get
-# Due to the inconvenience of typing on mobile devices, 
-# you can autofill URL and TOKEN for first run in debug mode.
-flutter run --dart-define=URL=wss://${LIVEKIT_SERVER_IP_OR_DOMAIN} --dart-define=TOKEN=${YOUR_TOKEN}
+# Debido a la inconveniencia de escribir en dispositivos móviles,
+# puedes autocompletar la URL y el TOKEN para la primera ejecución en modo debug.
+flutter run
 ```
 
-## End-to-End Encryption (E2EE)
+## Configuración
+La demo es configurable mediante constantes de configuración contenidas en el archivo configuration/constants.dart
 
-The example app supports end-to-end encryption for audio and video tracks. To enable E2EE:
+Las constantes de configuración más importantes son:
 
-1. Toggle the "E2EE" switch in the connect screen
-2. Enter a shared key that will be used for encryption
-3. All participants must use the same shared key to communicate
+SERVER_URL = [URL del serviodor de Livekit al que conectarse]
+TOKEN_ENDPOINT = [Endpoint del servicio de generación de tokens requeridos para la conexión]
 
-For web support, you'll need to compile the E2EE web worker:
+Además, se han incluído otras constantes que modulan el comportamiento de la conexión de vídeo a través de Livekit, aunque no son objeto de esta demo:
 
-```bash
-dart compile js web/e2ee.worker.dart -o example/web/e2ee.worker.dart.js -m
-```
+### Cifrado extremo a extremo.
+Todos los participantes deberían tener activado este valor y compartir la misma clave para soportar este tipo de comunicación
 
-Note: All participants in the room must have E2EE enabled and use the same shared key to see and hear each other. If the keys don't match, participants won't be able to decode each other's audio and video.
+E2EE = [Valor booleano. Activa o desactova el cifrado extremo a extremo]
+E2EEKEY = [Clave compartida de cifrado]
+
+### Detalles de la configuración de vídeo
+SIMULCAST = [Valor booleano. activa o desactiva la capacidad de usar múltioples codecs de vídeo de forma simultánea]
+ADAPTATIVE_STREAM = [Valor booleano. Delega en Livecast el manejo automático de la calidad de vídeo para optimizarlo en función del ancho de banda y la CPU]
+DYNACAST = [Valor booleano. Activa o desactiva el pausado automático de los streams que no estén siendo consumidos]
+PREFERRED_CODEC = [Codec de víddeo preferido. ('VP8', 'H264', 'H265', 'VP9' o 'AV1')]
+
+## Tareas pendientes
+Extraer una librería para poder utilizar el componente de video en aplicaciones de terceros
