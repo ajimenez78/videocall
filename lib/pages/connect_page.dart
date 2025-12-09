@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:videocall/configuration/constants.dart';
 import 'package:videocall/widgets/videocall_widget.dart';
-import 'package:videocall/pages/prejoin_page.dart';
 import 'package:videocall/l10n/app_localizations.dart';
-import 'package:http/http.dart' as http;
+import 'package:videocall/models/join_args.dart';
+import 'package:videocall/services/token_service.dart';
+import 'package:videocall/pages/prejoin_page.dart';
 
 class ConnectPage extends StatefulWidget {
   const ConnectPage({Key? key}) : super(key: key);
@@ -41,29 +40,23 @@ class _ConnectPageState extends State<ConnectPage> {
       final userName = _userNameController.text;
 
       try {
-        final resp = await http.get(Uri.parse('${Constants.TOKEN_ENDPOINT}?room=$roomName&username=$userName'));
-        if (resp.statusCode != 200) {
-          throw Exception('${l10n.errorFetchToken}: ${resp.statusCode} ${resp.reasonPhrase}');
-        }
-        final data = jsonDecode(resp.body);
-        print('Server response: $data');
-        print('Received token: ${data['token']}');
+        final token = await TokenService.fetchToken(room: roomName!, username: userName);
+        print('Received token: $token');
 
         // Form is valid, proceed to PreJoinPage
         if (!mounted) return;
         await Navigator.pushNamed(context, PreJoinPage.routeName,
-          arguments: JoinArgs(
-            url: Constants.SERVER_URL,
-            token: data['token'],
-            e2ee: Constants.E2EE,
-            e2eeKey: Constants.E2EEKEY,
-            simulcast: Constants.SIMULCAST,
-            adaptiveStream: Constants.ADAPTATIVE_STREAM,
-            dynacast: Constants.DYNACAST,
-            preferredCodec: Constants.PREFERRED_CODEC,
-            enableBackupVideoCodec: ['VP9', 'AV1'].contains(Constants.PREFERRED_CODEC),
-          )
-        );
+            arguments: JoinArgs(
+              url: Constants.SERVER_URL,
+              token: token,
+              e2ee: Constants.E2EE,
+              e2eeKey: Constants.E2EEKEY,
+              simulcast: Constants.SIMULCAST,
+              adaptiveStream: Constants.ADAPTATIVE_STREAM,
+              dynacast: Constants.DYNACAST,
+              preferredCodec: Constants.PREFERRED_CODEC,
+              enableBackupVideoCodec: ['VP9', 'AV1'].contains(Constants.PREFERRED_CODEC),
+            ));
       } catch (e) {
         print('${l10n.errorFetchToken}. ${l10n.errorSeeConsole}. $e');
       }

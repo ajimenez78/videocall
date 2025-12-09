@@ -6,32 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:videocall/exts.dart';
 import 'package:videocall/l10n/app_localizations.dart';
+import 'package:videocall/models/join_args.dart';
+import 'package:videocall/services/room_service.dart';
 
 import '../theme.dart';
 import 'room_page.dart';
-
-class JoinArgs {
-  JoinArgs({
-    required this.url,
-    required this.token,
-    this.e2ee = false,
-    this.e2eeKey,
-    this.simulcast = true,
-    this.adaptiveStream = true,
-    this.dynacast = true,
-    this.preferredCodec = 'VP8',
-    this.enableBackupVideoCodec = true,
-  });
-  final String url;
-  final String token;
-  final bool e2ee;
-  final String? e2eeKey;
-  final bool simulcast;
-  final bool adaptiveStream;
-  final bool dynacast;
-  final String preferredCodec;
-  final bool enableBackupVideoCodec;
-}
 
 class PreJoinPage extends StatefulWidget {
   const PreJoinPage({
@@ -164,73 +143,11 @@ class _PreJoinPageState extends State<PreJoinPage> {
     final args = ModalRoute.of(context)!.settings.arguments as JoinArgs;
 
     try {
-      //create new room
-      const cameraEncoding = VideoEncoding(
-        maxBitrate: 5 * 1000 * 1000,
-        maxFramerate: 30,
-      );
-
-      const screenEncoding = VideoEncoding(
-        maxBitrate: 3 * 1000 * 1000,
-        maxFramerate: 15,
-      );
-
-      E2EEOptions? e2eeOptions;
-      if (args.e2ee && args.e2eeKey != null) {
-        final keyProvider = await BaseKeyProvider.create();
-        e2eeOptions = E2EEOptions(keyProvider: keyProvider);
-        await keyProvider.setKey(args.e2eeKey!);
-      }
-
-      final room = Room(
-        roomOptions: RoomOptions(
-          adaptiveStream: args.adaptiveStream,
-          dynacast: args.dynacast,
-          defaultAudioPublishOptions: const AudioPublishOptions(
-            name: 'custom_audio_track_name',
-          ),
-          defaultCameraCaptureOptions: const CameraCaptureOptions(
-              maxFrameRate: 30,
-              params: VideoParameters(
-                dimensions: VideoDimensions(1280, 720),
-              )),
-          defaultScreenShareCaptureOptions: const ScreenShareCaptureOptions(
-              useiOSBroadcastExtension: true,
-              params: VideoParameters(
-                dimensions: VideoDimensionsPresets.h1080_169,
-              )),
-          defaultVideoPublishOptions: VideoPublishOptions(
-            simulcast: args.simulcast,
-            videoCodec: args.preferredCodec,
-            backupVideoCodec: BackupVideoCodec(
-              enabled: args.enableBackupVideoCodec,
-            ),
-            videoEncoding: cameraEncoding,
-            screenShareEncoding: screenEncoding,
-          ),
-          encryption: e2eeOptions,
-        ),
-      );
-      // Create a Listener before connecting
-      final listener = room.createListener();
-
-      await room.prepareConnection(args.url, args.token);
-
-      // Try to connect to the room
-      // This will throw an Exception if it fails for any reason.
-      await room.connect(
-        args.url,
-        args.token,
-        fastConnectOptions: FastConnectOptions(
-          microphone: TrackOption(track: _audioTrack),
-          camera: TrackOption(track: _videoTrack),
-        ),
-      );
-
+      final result = await RoomService.connectRoom(args, audioTrack: _audioTrack, videoTrack: _videoTrack);
       if (!context.mounted) return;
       await Navigator.push<void>(
         context,
-        MaterialPageRoute(builder: (_) => RoomPage(room, listener)),
+        MaterialPageRoute(builder: (_) => RoomPage(result.room, result.listener)),
       );
     } catch (error) {
       print('Could not connect $error');
