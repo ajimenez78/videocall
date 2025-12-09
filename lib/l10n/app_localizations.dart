@@ -138,6 +138,129 @@ class AppLocalizations {
 
   String get controlsDisconnect =>
       locale.languageCode == 'en' ? 'disconnect' : 'desconectar';
+
+  // Dialog strings (exts.dart)
+  // Publish Dialog
+  String get dialogPublishTitle =>
+      locale.languageCode == 'en' ? 'Publish' : 'Publicar';
+
+  String get dialogPublishContent =>
+      locale.languageCode == 'en'
+      ? 'Would you like to publish your Camera & Mic ?'
+      : '¿Desea publicar su Cámara y Micrófono?';
+
+  // Play Audio Dialog
+  String get dialogPlayAudioTitle =>
+      locale.languageCode == 'en' ? 'Play Audio' : 'Reproducir Audio';
+
+  String get dialogPlayAudioContent =>
+      locale.languageCode == 'en'
+      ? 'You need to manually activate audio PlayBack for iOS Safari !'
+      : '¡Necesita activar manualmente la reproducción de audio para iOS Safari!';
+
+  String get dialogPlayAudioButton =>
+      locale.languageCode == 'en' ? 'Play Audio' : 'Reproducir Audio';
+
+  // Unpublish Dialog
+  String get dialogUnpublishTitle =>
+      locale.languageCode == 'en' ? 'UnPublish' : 'Despublicar';
+
+  String get dialogUnpublishContent =>
+      locale.languageCode == 'en'
+      ? 'Would you like to un-publish your Camera & Mic ?'
+      : '¿Desea despublicar su Cámara y Micrófono?';
+
+  // Error Dialog
+  String get dialogErrorTitle =>
+      locale.languageCode == 'en' ? 'Error' : 'Error';
+
+  // Disconnect Dialog
+  String get dialogDisconnectTitle =>
+      locale.languageCode == 'en' ? 'Disconnect' : 'Desconectar';
+
+  String get dialogDisconnectContent =>
+      locale.languageCode == 'en'
+      ? 'Are you sure to disconnect?'
+      : '¿Está seguro de desconectarse?';
+
+  String get dialogDisconnectButton =>
+      locale.languageCode == 'en' ? 'Disconnect' : 'Desconectar';
+
+  // Reconnect Dialog
+  String get dialogReconnectTitle =>
+      locale.languageCode == 'en' ? 'Reconnect' : 'Reconectar';
+
+  String get dialogReconnectContent =>
+      locale.languageCode == 'en'
+      ? 'This will force a reconnection'
+      : 'Esto forzará una reconexión';
+
+  String get dialogReconnectButton =>
+      locale.languageCode == 'en' ? 'Reconnect' : 'Reconectar';
+
+  String get dialogReconnectSuccessContent =>
+      locale.languageCode == 'en'
+      ? 'Reconnection was successful.'
+      : 'La reconexión fue exitosa.';
+
+  // Send Data Dialog
+  String get dialogSendDataTitle =>
+      locale.languageCode == 'en' ? 'Send data' : 'Enviar datos';
+
+  String get dialogSendDataContent =>
+      locale.languageCode == 'en'
+      ? 'This will send a sample data to all participants in the room'
+      : 'Esto enviará datos de ejemplo a todos los participantes en la sala';
+
+  String get dialogSendDataButton =>
+      locale.languageCode == 'en' ? 'Send' : 'Enviar';
+
+  // Data Received Dialog
+  String get dialogDataReceivedTitle =>
+      locale.languageCode == 'en' ? 'Received data' : 'Datos recibidos';
+
+  // Recording Status Dialog
+  String get dialogRecordingTitle =>
+      locale.languageCode == 'en' ? 'Room recording reminder' : 'Recordatorio de grabación de sala';
+
+  String get dialogRecordingActive =>
+      locale.languageCode == 'en'
+      ? 'Room recording is active.'
+      : 'La grabación de la sala está activa.';
+
+  String get dialogRecordingStopped =>
+      locale.languageCode == 'en'
+      ? 'Room recording is stopped.'
+      : 'La grabación de la sala se ha detenido.';
+
+  // Subscribe Permission Dialog
+  String get dialogSubscribePermissionTitle =>
+      locale.languageCode == 'en' ? 'Allow subscription' : 'Permitir suscripción';
+
+  String get dialogSubscribePermissionContent =>
+      locale.languageCode == 'en'
+      ? 'Allow all participants to subscribe tracks published by local participant?'
+      : '¿Permitir que todos los participantes se suscriban a las pistas publicadas por el participante local?';
+
+  // Simulate Scenario Dialog
+  String get dialogSimulateScenarioTitle =>
+      locale.languageCode == 'en' ? 'Simulate Scenario' : 'Simular Escenario';
+
+  // Common dialog buttons
+  String get dialogButtonYes =>
+      locale.languageCode == 'en' ? 'YES' : 'SÍ';
+
+  String get dialogButtonNo =>
+      locale.languageCode == 'en' ? 'NO' : 'NO';
+
+  String get dialogButtonOk =>
+      locale.languageCode == 'en' ? 'OK' : 'OK';
+
+  String get dialogButtonCancel =>
+      locale.languageCode == 'en' ? 'Cancel' : 'Cancelar';
+
+  String get dialogButtonIgnore =>
+      locale.languageCode == 'en' ? 'Ignore' : 'Ignorar';
 }
 
 class _AppLocalizationsDelegate
