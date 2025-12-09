@@ -10,7 +10,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Videocall Home'),
+        title: Text('Medical Teleconsultation'),
+        backgroundColor: Colors.teal[700],
+        foregroundColor: Colors.white,
       ),
       body: Center(
         child: Padding(
@@ -18,21 +20,33 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.video_call,
-                size: 100,
-                color: Theme.of(context).primaryColor,
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.teal[50],
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.medical_services,
+                  size: 80,
+                  color: Colors.teal[700],
+                ),
               ),
               SizedBox(height: 32),
               Text(
-                'Welcome to Videocall App',
-                style: Theme.of(context).textTheme.headlineMedium,
+                'Telemedicine Portal',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: Colors.teal[800],
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16),
               Text(
-                'Connect with others through high-quality video calls',
-                style: Theme.of(context).textTheme.bodyLarge,
+                'Connect with healthcare professionals through secure video consultations',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Colors.grey[700],
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 48),
@@ -40,9 +54,11 @@ class HomePage extends StatelessWidget {
                 onPressed: () async {
                   await Navigator.pushNamed(context, ConnectPage.routeName);
                 },
-                icon: Icon(Icons.login),
-                label: Text('Join a Call'),
+                icon: Icon(Icons.video_call),
+                label: Text('Start Consultation'),
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal[700],
+                  foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   textStyle: TextStyle(fontSize: 18),
                 ),

@@ -22,16 +22,19 @@ void main() {
     await tester.pumpWidget(VideocallApp());
 
     // Verify that the HomePage title appears
-    expect(find.text('Videocall Home'), findsOneWidget);
+    expect(find.text('Medical Teleconsultation'), findsOneWidget);
 
     // Verify that the welcome message appears
-    expect(find.text('Welcome to Videocall App'), findsOneWidget);
-    expect(find.text('Connect with others through high-quality video calls'), findsOneWidget);
+    expect(find.text('Telemedicine Portal'), findsOneWidget);
+    expect(find.text('Connect with healthcare professionals through secure video consultations'), findsOneWidget);
 
-    // Verify that the video call icon appears
+    // Verify that the medical services icon appears
+    expect(find.byIcon(Icons.medical_services), findsOneWidget);
+
+    // Verify that the video call icon appears in the button
     expect(find.byIcon(Icons.video_call), findsOneWidget);
 
-    // Verify that the "Join a Call" button appears
-    expect(find.text('Join a Call'), findsOneWidget);
+    // Verify that the "Start Consultation" button appears
+    expect(find.text('Start Consultation'), findsOneWidget);
   });
 }
