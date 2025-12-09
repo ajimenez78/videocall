@@ -53,11 +53,3 @@ Ejemplo rápido para ejecutar tests en el repo:
 ```bash
 flutter test test/token_service_test.dart
 ```
-
-## Próximos pasos sugeridos
-- Añadir un `TokenRepository` que permita inyectar el `TOKEN_ENDPOINT` (útil para tests y entornos).
-- Añadir logs estructurados y métricas (tiempos de respuesta token, errores de conexión).
-- Crear tests unitarios y de integración para ambos servicios.
-
----
-Si quieres, puedo añadir automáticamente un test unitario de ejemplo para `TokenService` ahora.
