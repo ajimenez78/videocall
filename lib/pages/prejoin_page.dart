@@ -35,7 +35,7 @@ class _PreJoinPageState extends State<PreJoinPage> {
 
   MediaDevice? _selectedVideoDevice;
   MediaDevice? _selectedAudioDevice;
-  VideoParameters _selectedVideoParameters = VideoParametersPresets.h720_169;
+  final VideoParameters _selectedVideoParameters = VideoParametersPresets.h720_169;
 
   @override
   void initState() {
@@ -272,50 +272,6 @@ class _PreJoinPageState extends State<PreJoinPage> {
                     ),
                   ),
                 ),
-                if (_enableVideo)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton2<VideoParameters>(
-                        isExpanded: true,
-                        hint: Text(
-                          l10n.prejoinSelectVideoDimensions,
-                        ),
-                        items: [
-                          VideoParametersPresets.h480_43,
-                          VideoParametersPresets.h540_169,
-                          VideoParametersPresets.h720_169,
-                          VideoParametersPresets.h1080_169,
-                        ]
-                            .map((VideoParameters item) => DropdownMenuItem<VideoParameters>(
-                                  value: item,
-                                  child: Text(
-                                    '${item.dimensions.width}x${item.dimensions.height}',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
-                        value: _selectedVideoParameters,
-                        onChanged: (VideoParameters? value) async {
-                          if (value != null) {
-                            _selectedVideoParameters = value;
-                            await _changeLocalVideoTrack();
-                            setState(() {});
-                          }
-                        },
-                        buttonStyleData: const ButtonStyleData(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          height: 40,
-                          width: 140,
-                        ),
-                        menuItemStyleData: const MenuItemStyleData(
-                          height: 40,
-                        ),
-                      ),
-                    ),
-                  ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Row(

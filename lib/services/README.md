@@ -36,18 +36,6 @@ Navigator.push(context, MaterialPageRoute(
 ));
 ```
 
-## Notas de seguridad y configuración
-- Asegúrate de que `Constants.TOKEN_ENDPOINT` use HTTPS en producción para proteger el token en tránsito.
-- Nunca guardes claves E2EE en código fuente; usa un almacén seguro o un servicio de gestión de secretos.
-- Valida y sanea cualquier dato proveniente del servidor antes de usarlo en la UI.
-
-## Manejo de errores
-- Ambos servicios lanzan `Exception` en errores de red o respuestas inválidas. El llamador debe atraparlas y mostrar errores amigables (diálogos, toasts) y/o proporcionar acciones (reintentar).
-
-## Tests recomendados
-- Test unitario para `TokenService.fetchToken` usando un mock de `http.Client` que simule respuestas 200 con JSON y respuestas de error.
-- Test de integración/mocks para `RoomService.connectRoom` que verifique el flujo de creación del `Room` y manejo de opciones. Dado que `livekit_client` interactúa con native bindings, se recomienda usar pruebas con mocks o abstraer más la capa de SDK para facilitar pruebas.
-
 Ejemplo rápido para ejecutar tests en el repo:
 
 ```bash
