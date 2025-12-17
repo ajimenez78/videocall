@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "611429764129",
+    "project_id": "insuline-pre",
+    "storage_bucket": "insuline-pre.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611429764129:android:6a125a1d923cadc61d6760",
+        "android_client_info": {
+          "package_name": "com.movilok.https_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvABCk4wPdhjWjcXxuRFRYMCi3UrikMBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611429764129:android:bc4b34f94e950c601d6760",
+        "android_client_info": {
+          "package_name": "io.livekit.example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvABCk4wPdhjWjcXxuRFRYMCi3UrikMBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

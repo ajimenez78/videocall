@@ -4,8 +4,21 @@ import 'package:videocall/pages/home_page.dart';
 import 'package:videocall/pages/connect_page.dart';
 import 'package:videocall/pages/prejoin_page.dart';
 import 'package:videocall/l10n/app_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+// Import the firebase_app_check plugin
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    //options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseAppCheck.instance.activate(
+    providerAndroid: AndroidDebugProvider(),
+    providerApple: AppleAppAttestProvider()
+  );
   runApp(VideocallApp());
 }
 
