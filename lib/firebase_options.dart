@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDEh3jzVnC3VLSUv1P7p_gS5cjLsW8ZqeQ',
+    apiKey: 'AIzaSyAT376bAx6G5dOJj03s41TBjaWDgWr6fII',
     appId: '1:611429764129:android:bc4b34f94e950c601d6760',
     messagingSenderId: '611429764129',
     projectId: 'insuline-pre',
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBY8A9US2PZMvJaz47l0JlLPyQvPitlMvE',
+    apiKey: 'AIzaSyA1iwW4TsJlwp0AZzumoTfcqI8gQ2x7iZ4',
     appId: '1:611429764129:ios:f69b71f4ad5dbd1c1d6760',
     messagingSenderId: '611429764129',
     projectId: 'insuline-pre',
