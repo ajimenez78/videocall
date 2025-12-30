@@ -22,6 +22,7 @@ Future<void> initializeFirebase() async {
 }
 
 Future<void> initializeFreeRASP() async {
+  print('=== FreeRASP: Starting initialization ===');
 
   // create a configuration for freeRASP
   final config = TalsecConfig(
@@ -40,8 +41,8 @@ Future<void> initializeFreeRASP() async {
       teamId: 'GH7H7XQSUB',
     ),
     watcherMail: 'ajimenez@movilok.com', // for Security Reports, Talsec Portal, Updates
-    isProd: false, // set to true for production builds
-    killOnBypass: true,
+    isProd: true, // set to true for production builds
+    killOnBypass: false, // Set to true for production - false for debugging
   );
   
   // Setting up callbacks
@@ -112,8 +113,18 @@ Future<void> initializeFreeRASP() async {
   );
 
   // Attaching listener
-  await Talsec.instance.attachListener(callback);// start freeRASP
-  await Talsec.instance.start(config);
+  print('=== FreeRASP: Attaching listener ===');
+  await Talsec.instance.attachListener(callback);
+
+  // start freeRASP
+  print('=== FreeRASP: Starting with config ===');
+  try {
+    await Talsec.instance.start(config);
+    print('=== FreeRASP: Successfully started ===');
+  } catch (e) {
+    print('=== FreeRASP: Error during start: $e ===');
+    rethrow;
+  }
 }
 
 void main() async {
