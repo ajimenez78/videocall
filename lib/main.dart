@@ -1,15 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:freerasp/freerasp.dart';
 import 'package:videocall/pages/home_page.dart';
 import 'package:videocall/pages/connect_page.dart';
 import 'package:videocall/pages/prejoin_page.dart';
 import 'package:videocall/l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:freerasp/freerasp.dart';
 import 'firebase_options.dart';
 
 // Import the firebase_app_check plugin
 import 'package:firebase_app_check/firebase_app_check.dart';
+
+  Future<void> initializeFreeRASP() async {
+    print('=== FreeRASP: Starting initialization ===');
+
+    // create a configuration for freeRASP
+    final config = TalsecConfig(
+      /// For Android
+      androidConfig: AndroidConfig(
+        packageName: 'your.package.name',
+        signingCertHashes: [
+          'mVr/qQLO8DKTwqlL+B1qigl9NoBnbiUs8b4c2Ewcz0k='
+        ], // Replace with your release (!) signing certificate hash(es)
+        supportedStores: ['com.sec.android.app.samsungapps'],
+      ),
+
+      /// For iOS
+      iosConfig: IOSConfig(
+        bundleIds: ['com.movilok.livekit.example'],
+        teamId: 'GH7H7XQSUB',
+      ),
+      watcherMail: 'ajimenez@movilok.com', // for Security Reports, Talsec Portal, Updates
+      isProd: true, // set to true for production builds
+      killOnBypass: false, // Set to true for production - false for debugging
+    );
+    
+    // Setting up callbacks
+    final callback = ThreatCallback(
+        onAppIntegrity: () => {
+          print('freeRASP callback: App integrity')
+        },
+        onObfuscationIssues: () => {
+          print('freeRASP callback: Obfuscation issues')
+        },
+        onDebug: () => {
+          print('freeRASP callback: Debugging')
+        },
+        onDeviceBinding: () => {
+          print('freeRASP callback: Device binding')
+        },
+        onDeviceID: () => {
+          print('freeRASP callback: Device ID')
+        },
+        onHooks: () => {
+          print('freeRASP callback: Hooks')
+        },
+        onPasscode: () => {
+          print('freeRASP callback: Passcode not set')
+        },
+        onPrivilegedAccess: () => {
+          print('freeRASP callback: Privileged access')
+        },
+        onSecureHardwareNotAvailable: () => {
+          print('freeRASP callback: Secure hardware not available')
+        },
+        onSimulator: () => {
+          print('freeRASP callback: Simulator')
+        },
+        onSystemVPN: () => {
+          print('freeRASP callback: System VPN')
+        },
+        onDevMode: () => {
+          print('freeRASP callback: Developer mode')
+        },
+        onADBEnabled: () => {
+          print('freeRASP callback: USB debugging enabled')
+        },
+        onUnofficialStore: () => {
+          print('freeRASP callback: Unofficial store')
+        },
+        onScreenshot: () => {
+          print('freeRASP callback: Screenshot')
+        },
+        onScreenRecording: () => {
+          print('freeRASP callback: Screen recording')
+        },
+        onMultiInstance: () => {
+          print('freeRASP callback: Multi instance')
+        },
+        onUnsecureWiFi: () => {
+          print('freeRASP callback: Unsecure wifi')
+        },
+        onLocationSpoofing: () => {
+          print('freeRASP callback: Location spoofing')
+        },
+        onTimeSpoofing: () => {
+          print('freeRASP callback: Time spoofing')
+        },
+        onMalware: (suspiciousApps) => {
+          print('freeRASP callback: Suspicous apps')
+        }
+    );
+
+    // Attaching listener
+    print('=== FreeRASP: Attaching listener ===');
+    await Talsec.instance.attachListener(callback);
+
+    // start freeRASP
+    print('=== FreeRASP: Starting with config ===');
+    try {
+      await Talsec.instance.start(config);
+      print('=== FreeRASP: Successfully started ===');
+    } catch (e) {
+      print('=== FreeRASP: Error during start: $e ===');
+      rethrow;
+    }
+  }
 
 Future<void> initializeFirebase() async {
   await Firebase.initializeApp(
@@ -21,115 +127,11 @@ Future<void> initializeFirebase() async {
   );
 }
 
-Future<void> initializeFreeRASP() async {
-  print('=== FreeRASP: Starting initialization ===');
 
-  // create a configuration for freeRASP
-  final config = TalsecConfig(
-    /// For Android
-    androidConfig: AndroidConfig(
-      packageName: 'your.package.name',
-      signingCertHashes: [
-        'mVr/qQLO8DKTwqlL+B1qigl9NoBnbiUs8b4c2Ewcz0k='
-      ], // Replace with your release (!) signing certificate hash(es)
-      supportedStores: ['com.sec.android.app.samsungapps'],
-    ),
-
-    /// For iOS
-    iosConfig: IOSConfig(
-      bundleIds: ['com.movilok.livekit.example'],
-      teamId: 'GH7H7XQSUB',
-    ),
-    watcherMail: 'ajimenez@movilok.com', // for Security Reports, Talsec Portal, Updates
-    isProd: true, // set to true for production builds
-    killOnBypass: false, // Set to true for production - false for debugging
-  );
-  
-  // Setting up callbacks
-  final callback = ThreatCallback(
-      onAppIntegrity: () => {
-        print('freeRASP callback: App integrity')
-      },
-      onObfuscationIssues: () => {
-        print('freeRASP callback: Obfuscation issues')
-      },
-      onDebug: () => {
-        print('freeRASP callback: Debugging')
-      },
-      onDeviceBinding: () => {
-        print('freeRASP callback: Device binding')
-      },
-      onDeviceID: () => {
-        print('freeRASP callback: Device ID')
-      },
-      onHooks: () => {
-        print('freeRASP callback: Hooks')
-      },
-      onPasscode: () => {
-        print('freeRASP callback: Passcode not set')
-      },
-      onPrivilegedAccess: () => {
-        print('freeRASP callback: Privileged access')
-      },
-      onSecureHardwareNotAvailable: () => {
-        print('freeRASP callback: Secure hardware not available')
-      },
-      onSimulator: () => {
-        print('freeRASP callback: Simulator')
-      },
-      onSystemVPN: () => {
-        print('freeRASP callback: System VPN')
-      },
-      onDevMode: () => {
-        print('freeRASP callback: Developer mode')
-      },
-      onADBEnabled: () => {
-        print('freeRASP callback: USB debugging enabled')
-      },
-      onUnofficialStore: () => {
-        print('freeRASP callback: Unofficial store')
-      },
-      onScreenshot: () => {
-        print('freeRASP callback: Screenshot')
-      },
-      onScreenRecording: () => {
-        print('freeRASP callback: Screen recording')
-      },
-      onMultiInstance: () => {
-        print('freeRASP callback: Multi instance')
-      },
-      onUnsecureWiFi: () => {
-        print('freeRASP callback: Unsecure wifi')
-      },
-      onLocationSpoofing: () => {
-        print('freeRASP callback: Location spoofing')
-      },
-      onTimeSpoofing: () => {
-        print('freeRASP callback: Time spoofing')
-      },
-      onMalware: (suspiciousApps) => {
-        print('freeRASP callback: Suspicous apps')
-      }
-  );
-
-  // Attaching listener
-  print('=== FreeRASP: Attaching listener ===');
-  await Talsec.instance.attachListener(callback);
-
-  // start freeRASP
-  print('=== FreeRASP: Starting with config ===');
-  try {
-    await Talsec.instance.start(config);
-    print('=== FreeRASP: Successfully started ===');
-  } catch (e) {
-    print('=== FreeRASP: Error during start: $e ===');
-    rethrow;
-  }
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await initializeFirebase();
+  await initializeFirebase();
   await initializeFreeRASP();
   runApp(VideocallApp());
 }
