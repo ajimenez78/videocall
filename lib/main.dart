@@ -30,10 +30,10 @@ void showToast(String message, {bool isWarning = true}) {
 }
 
 // Helper function to show alert dialog
-void showSecurityAlert(String title, String message) {
+Future<void> showSecurityAlert(String title, String message) async {
   final context = navigatorKey.currentContext;
   if (context != null) {
-    showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
