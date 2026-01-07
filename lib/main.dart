@@ -122,9 +122,9 @@ Future<void> initializeFreeRASP() async {
         print('freeRASP callback: Passcode not set');
         showToast('Security Warning: Passcode not set', isWarning: true);
       },
-      onPrivilegedAccess: () {
+      onPrivilegedAccess: () async {
         print('freeRASP callback: Privileged access');
-        showSecurityAlert(
+        await showSecurityAlert(
           'Security Alert',
           'Privileged access (root/jailbreak) has been detected on this device. This poses a significant security risk and may compromise the app\'s security features.'
         );
@@ -149,9 +149,9 @@ Future<void> initializeFreeRASP() async {
         print('freeRASP callback: USB debugging enabled');
         showToast('Security Alert: USB debugging enabled');
       },
-      onUnofficialStore: () {
+      onUnofficialStore: () async {
         print('freeRASP callback: Unofficial store');
-        showSecurityAlert(
+        await showSecurityAlert(
           'Security Alert',
           'This app was installed from an unofficial store. For your security, please install the app only from official app stores (Google Play Store or Apple App Store).'
         );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:videocall/configuration/constants.dart';
+import 'package:videocall/main.dart';
 import 'package:videocall/widgets/videocall_widget.dart';
 import 'package:videocall/l10n/app_localizations.dart';
 import 'package:videocall/models/join_args.dart';
@@ -17,7 +18,7 @@ class ConnectPage extends StatefulWidget {
 
 class _ConnectPageState extends State<ConnectPage> {
   final _formKey = GlobalKey<FormState>();
-  final _userNameController = TextEditingController();
+  final _userNameController = TextEditingController(text: 'Paciente 1');
   String? _selectedRoom;
 
   // List of available rooms
@@ -58,7 +59,12 @@ class _ConnectPageState extends State<ConnectPage> {
               enableBackupVideoCodec: ['VP9', 'AV1'].contains(Constants.PREFERRED_CODEC),
             ));
       } catch (e) {
-        print('${l10n.errorFetchToken}. ${l10n.errorSeeConsole}. $e');
+        final errorMessage = '${l10n.errorFetchToken}. ${l10n.errorSeeConsole}. $e';
+        print(errorMessage);
+        await showSecurityAlert(
+          'Security Alert',
+          errorMessage
+        );
       }
     }
   }
@@ -119,6 +125,7 @@ class _ConnectPageState extends State<ConnectPage> {
                     ),
                     SizedBox(height: 16),
                     TextFormField(
+                      readOnly: true,
                       controller: _userNameController,
                       decoration: InputDecoration(
                         labelText: l10n.connectUserLabel,
