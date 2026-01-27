@@ -203,9 +203,9 @@ Future<void> initializeFreeRASP() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await initializeFirebase();
+  await initializeFirebase();
   runApp(VideocallApp());
-  await initializeFreeRASP();
+  //await initializeFreeRASP();
 }
 
 class VideocallApp extends StatelessWidget {
